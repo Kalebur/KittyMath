@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34330.188
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KittyMath", "KittyMath\KittyMath.csproj", "{297499CE-E504-438B-BC41-D6DE37B45ABD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KittyMathTests", "KittyMathTests\KittyMathTests.csproj", "{19FDA7E9-E86C-4F5C-B67F-E537362D9CB4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{297499CE-E504-438B-BC41-D6DE37B45ABD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{297499CE-E504-438B-BC41-D6DE37B45ABD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{297499CE-E504-438B-BC41-D6DE37B45ABD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{297499CE-E504-438B-BC41-D6DE37B45ABD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{19FDA7E9-E86C-4F5C-B67F-E537362D9CB4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{19FDA7E9-E86C-4F5C-B67F-E537362D9CB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{19FDA7E9-E86C-4F5C-B67F-E537362D9CB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{19FDA7E9-E86C-4F5C-B67F-E537362D9CB4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DAF682BE-E554-4454-BF3C-E7442CCDCC2F}
+	EndGlobalSection
+EndGlobal
