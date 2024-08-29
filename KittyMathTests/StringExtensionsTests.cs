@@ -23,7 +23,7 @@ namespace KittyMathTests
         [TestCase("nInE8FOur.sEVeNSevEN", 984.77)]
         [TestCase("SEVENFOURONENINE.EIGHTTWO", 7419.82)]
         [TestCase("oneoneoneoneonethree.twofour", 111113.24)]
-        [TestCase("EigHtSevENonEONe.zeROtWO", 871.02)]
+        [TestCase("EigHtSevENonEONe.zeROtWO", 8711.02)]
         public void ConvertToNumber_ReturnsConvertedDecimalValueOfGivenString(string input, decimal expected)
         {
             // Tests are typically set up in an Arrange, Act, Assert order

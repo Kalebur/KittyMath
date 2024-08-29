@@ -2,25 +2,32 @@
 {
     public static class StringExtensions
     {
-        public static decimal ConvertToNumber(this string sentence)
+        public static decimal ConvertToNumber(this string input)
         {
+            /*
+             * This will be the variable we will eventually return as
+             * our final output. At the moment, we're just setting its
+             * value to be the same as input. That will change shortly.
+            */
+            var convertedString = input;
+
             /* 
              * Create a dictionary to map the numeric words to their
              * integer equivalent 
             */
 
-            Dictionary<string, int> numberMap = new()
+            Dictionary<String, String> numberMap = new Dictionary<String, String>
             {
-                { "zero", 0 },
-                { "one", 1 },
-                { "two", 2 },
-                { "three", 3 },
-                { "four", 4 },
-                { "five", 5 },
-                { "six", 6 },
-                { "seven", 7 },
-                { "eight", 8 },
-                { "nine", 9 }
+                { "zero", "0" },
+                { "one", "1" },
+                { "two", "2" },
+                { "three", "3" },
+                { "four", "4" },
+                { "five", "5" },
+                { "six", "6" },
+                { "seven", "7" },
+                { "eight", "8" },
+                { "nine", "9" }
             };
 
             /* To remove any issues with words not being detected
@@ -30,22 +37,28 @@
              * to lowercase. We'll also use any leading or trailing whitespaces
              * using the Trim() method.
             */
-            sentence = sentence.Trim().ToLower();
+            convertedString = convertedString.Trim().ToLower();
 
             /* 
-             * Loop through each of the keys, or words, in the dicionary
-             * and replace all occurrences of it in our sentence with its
-             * integer equivalent.
+             * Here, we're looping through every entry in the dictionary
+             * and converting the text form of a number to an actual number.
              */
-            foreach (var word in numberMap.Keys)
+            foreach (var numberAsWord in numberMap.Keys)
             {
                 /*
-                 * Because the number in the dictionary is an int, not a string,
-                 * we have to convert it back to a string before we can update
-                 * the sentence. Sentence itself is a string, and you can't mix
-                 * types.
+                 * For each entry in the dictionary,numberAsWord becomes that entry's key.
+                 * We want to find that value in input string and replace it with its
+                 * number equivalent, which is what the numberMap[numberAsWord] statement
+                 * is doing. It's going to the dictionary, finding the key that equals
+                 * the current numberAsWord (let's say "zero", for example) and returning
+                 * the value related to that key ("0"). The Replace method, then is saying
+                 * "Hey, all instances of zero in the string that's calling Replace() should
+                 * now be 0 instead. Here's a new string with those replacements made." We're
+                 * storing that new string back into convertedString. If you don't assign it
+                 * to a variable of some sort, the result of calling Replace() is just lost
+                 * to the void.
                 */
-                sentence = sentence.Replace(word, numberMap[word].ToString());
+                convertedString = convertedString.Replace(numberAsWord, numberMap[numberAsWord]);
             }
 
             /* 
@@ -55,7 +68,7 @@
              * Decimal.Parse method to get that, and we're just returning that value.
             */
 
-            return Decimal.Parse(sentence);
+            return Decimal.Parse(convertedString);
         }
     }
 }
