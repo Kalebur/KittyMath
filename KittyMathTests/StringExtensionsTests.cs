@@ -9,6 +9,16 @@ namespace KittyMathTests
         // to be passed into the test method. If you run these tests, all of them
         // except the last one should pass. I'm sure you can figure out why it's
         // failing.
+        [TestCase("zero", 0)]
+        [TestCase("one", 1)]
+        [TestCase("TwO", 2)]
+        [TestCase("ThReE", 3)]
+        [TestCase("FouR", 4)]
+        [TestCase("fIVe", 5)]
+        [TestCase("SIX", 6)]
+        [TestCase("seVEn", 7)]
+        [TestCase("EIGHT", 8)]
+        [TestCase("niNE", 9)]
         [TestCase("oneTwo3fOuR.eIgHtSevEn", 1234.87)]
         [TestCase("nInE8FOur.sEVeNSevEN", 984.77)]
         [TestCase("SEVENFOURONENINE.EIGHTTWO", 7419.82)]
