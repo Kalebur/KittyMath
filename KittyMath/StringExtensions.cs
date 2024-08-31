@@ -1,4 +1,6 @@
-﻿namespace KittyMath
+﻿using System.Text;
+
+namespace KittyMath
 {
     public static class StringExtensions
     {
@@ -13,7 +15,7 @@
 
             /* 
              * Create a dictionary to map the numeric words to their
-             * integer equivalent 
+             * actual numeric values
             */
 
             Dictionary<String, String> numberMap = new Dictionary<String, String>
@@ -69,6 +71,46 @@
             */
 
             return Decimal.Parse(convertedString);
+        }
+
+        public static string Franklin(this string encodedMessage)
+        {
+            // Create a new list to store our words as we decode them
+            var decodedWords = new List<string>();
+
+            // Split the input (the encoded message) into individual words
+            var encodedWords = encodedMessage.Split(" ");
+
+            // Loop through each word
+            foreach (var word in encodedWords)
+            {
+                /*
+                 * Decode the word using the Decode method below and
+                 * add it in the list of decoded words.
+                */
+                var decodedWord = word.Decode();
+                decodedWords.Add(decodedWord);
+            }
+
+            /*
+             * Join the list of decoded words back into a single string
+             * with all the words separated by spaces and return the
+             * new string.
+            */ 
+            return string.Join(" ", decodedWords);
+        }
+
+        private static string Decode(this string input)
+        {
+            var characters = input.ToCharArray();
+            Array.Reverse(characters);
+
+            /*
+             * new string(characters) is a shorter way of converting the
+             * characters array back into a combined string. It's the
+             * equivalent of writing string.Join("", characters);
+            */
+            return new string(characters);
         }
     }
 }

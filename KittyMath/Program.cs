@@ -17,10 +17,14 @@
             */
 
             string scribblings = "TwO3zErO1SeVEn.EightNine";
+            string encodedMessage = "ehT sleehw no eht sub og dnuor dna !dnuor";
 
             decimal number = scribblings.ConvertToNumber();
 
             Console.WriteLine($"Your Bank Balance is: ${number}");
+            
+            Console.WriteLine($"The Franklin encoded message is: {encodedMessage}");
+            Console.WriteLine($"The decoded Franklin message is: {encodedMessage.Franklin()}");
         }
     }
 }
