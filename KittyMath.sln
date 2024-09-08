@@ -3,9 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34330.188
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KittyMath", "KittyMath\KittyMath.csproj", "{297499CE-E504-438B-BC41-D6DE37B45ABD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KittyMath", "KittyMath\KittyMath.csproj", "{297499CE-E504-438B-BC41-D6DE37B45ABD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KittyMathTests", "KittyMathTests\KittyMathTests.csproj", "{19FDA7E9-E86C-4F5C-B67F-E537362D9CB4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KittyMathTests", "KittyMathTests\KittyMathTests.csproj", "{19FDA7E9-E86C-4F5C-B67F-E537362D9CB4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeConverter", "TimeConverter\TimeConverter.csproj", "{C4F36105-6F8E-41C8-8541-E61517FFE60E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeConverterTests", "TimeConverterTests\TimeConverterTests.csproj", "{A096C798-33EC-4B07-9B74-CF76EFD19206}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +25,14 @@ Global
 		{19FDA7E9-E86C-4F5C-B67F-E537362D9CB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{19FDA7E9-E86C-4F5C-B67F-E537362D9CB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{19FDA7E9-E86C-4F5C-B67F-E537362D9CB4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C4F36105-6F8E-41C8-8541-E61517FFE60E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C4F36105-6F8E-41C8-8541-E61517FFE60E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C4F36105-6F8E-41C8-8541-E61517FFE60E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C4F36105-6F8E-41C8-8541-E61517FFE60E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A096C798-33EC-4B07-9B74-CF76EFD19206}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A096C798-33EC-4B07-9B74-CF76EFD19206}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A096C798-33EC-4B07-9B74-CF76EFD19206}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A096C798-33EC-4B07-9B74-CF76EFD19206}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

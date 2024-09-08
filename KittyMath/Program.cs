@@ -4,6 +4,11 @@
     {
         static void Main(string[] args)
         {
+            PerformKittyMath();
+        }
+
+        private static void PerformKittyMath()
+        {
             /* 
              
             Kitty Tiger Strikes Again.  You probably shouldn't have let Kitty 
@@ -17,12 +22,15 @@
             */
 
             string scribblings = "TwO3zErO1SeVEn.EightNine";
-            string encodedMessage = "ehT sleehw no eht sub og dnuor dna !dnuor";
-
             decimal number = scribblings.ConvertToNumber();
 
             Console.WriteLine($"Your Bank Balance is: ${number}");
-            
+        }
+
+        private static void PerformFranklinDecoding()
+        {
+            string encodedMessage = "ehT sleehw no eht sub og dnuor dna !dnuor";
+
             Console.WriteLine($"The Franklin encoded message is: {encodedMessage}");
             Console.WriteLine($"The decoded Franklin message is: {encodedMessage.Franklin()}");
         }
