@@ -194,32 +194,37 @@
 
         public decimal ConvertSecondsToYears(decimal seconds)
         {
-            throw new NotImplementedException();
+            var days = ConvertSecondsToDays(seconds);
+            return ConvertDaysToYears(days);
         }
 
         public decimal ConvertYearsToDays(decimal years)
         {
-            throw new NotImplementedException();
+            var months = ConvertYearsToMonths(years);
+            return ConvertMonthsToDays(months);
         }
 
         public decimal ConvertYearsToHours(decimal years)
         {
-            throw new NotImplementedException();
+            var days = ConvertYearsToDays(years);
+            return ConvertDaysToHours(days);
         }
 
         public decimal ConvertYearsToMinutes(decimal years)
         {
-            throw new NotImplementedException();
+            var hours = ConvertYearsToHours(years);
+            return ConvertHoursToMinutes(hours);
         }
 
         public decimal ConvertYearsToMonths(decimal years)
         {
-            throw new NotImplementedException();
+            return Math.Round(years * 12, 2);
         }
 
         public decimal ConvertYearsToSeconds(decimal years)
         {
-            throw new NotImplementedException();
+            var minutes = ConvertYearsToMinutes(years);
+            return ConvertMinutesToSeconds(minutes);
         }
     }
 }
