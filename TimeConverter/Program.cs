@@ -12,13 +12,16 @@
         xxxx seconds
 */
 
+using TimeConverter;
+
 var input = "1942y 32d 07h 03m 42s";
 var input2 = "314s";
-var timeConverter = new TimeConverter.TimeConverter();
+var unitConverter = new UnitConverter();
+var timeConverter = new UnitProcessor(new UnitAssigner(unitConverter), unitConverter);
 
 //var result = timeConverter.SimpleConvertFromString(input2);
-var result = timeConverter.ConvertFromString(input2);
-DisplayConversionResult(result, input2);
+var result = timeConverter.ConvertFromString(input);
+DisplayConversionResult(result, input);
 
 void DisplayConversionResult(Dictionary<char, decimal> result, string input)
 {

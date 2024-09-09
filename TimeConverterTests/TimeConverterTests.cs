@@ -2,12 +2,12 @@ namespace TimeConverterTests
 {
     public class Tests
     {
-        private TimeConverter.TimeConverter _timeConverter;
+        private TimeConverter.UnitConverter _timeConverter;
 
         [SetUp]
         public void Setup()
         {
-            _timeConverter = new TimeConverter.TimeConverter();
+            _timeConverter = new TimeConverter.UnitConverter();
         }
 
         [TestCase(31, 1)]
