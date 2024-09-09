@@ -40,8 +40,8 @@ namespace TimeConverter
             decimal convertedYears = _unitConverter.ConvertMonthsToYears(unitsByUnitCode['M']);
             _unitAssigner.AssignConvertedValues(unitsByUnitCode, 'y', 'M', convertedYears, _unitConverter.ConvertYearsToMonths);
 
-            var convertedValuesAsInputString = $"{unitsByUnitCode['y']}y {unitsByUnitCode['M']}M {unitsByUnitCode['d']}d {unitsByUnitCode['h']}h {unitsByUnitCode['m']}m {unitsByUnitCode['s']}s";
-            Console.WriteLine(convertedValuesAsInputString);
+            //var convertedValuesAsInputString = $"{unitsByUnitCode['y']}y {unitsByUnitCode['M']}M {unitsByUnitCode['d']}d {unitsByUnitCode['h']}h {unitsByUnitCode['m']}m {unitsByUnitCode['s']}s";
+            //Console.WriteLine(convertedValuesAsInputString);
 
             return unitsByUnitCode;
         }
