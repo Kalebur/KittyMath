@@ -16,7 +16,7 @@ namespace TimeConverter
 
         public Dictionary<char, decimal> ConvertFromString(string input)
         {
-            var valuesFromString = input.Split(" ");
+            var valuesFromString = input.Split(" ", StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
             var unitsByUnitCode = new Dictionary<char, decimal>();
 
             decimal combinedSeconds = 0;
