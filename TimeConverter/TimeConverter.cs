@@ -54,7 +54,80 @@ namespace TimeConverter
             years = Math.Floor(convertedYears);
             months = Math.Round(ConvertYearsToMonths(convertedYears - years));
 
+            days += (int)(years / 4);
+            var convertedValuesAsInputString = $"{years}y {months}M {days}d {hours}h {minutes}m {seconds}s";
+            Console.WriteLine(convertedValuesAsInputString);
+
             return (years, months, days, hours, minutes, seconds);
+        }
+
+        public Dictionary<char, int> SimpleConvertFromString(string input)
+        {
+            var values = new Dictionary<char, int>()
+            {
+                {'y', 0 },
+                {'d', 0 },
+                {'h', 0 },
+                {'m', 0 },
+                {'s', 0 },
+            };
+            var valuesToConvert = input.Split(" ");
+            Regex regex = new Regex(@"(\d+)([ydhms])");
+
+            foreach (var value in valuesToConvert)
+            {
+                var unitType = value.Last();
+                var unitCount = int.Parse(value[0..(value.Length - 1)]);
+                values[unitType] = unitCount;
+            }
+
+            var convertedValues = PerformSimpleConversion(values);
+
+            return convertedValues;
+        }
+
+        private Dictionary<char, int> PerformSimpleConversion(Dictionary<char, int> values)
+        {
+            // Convert seconds to minutes
+            if (values['s'] >= 60) {
+                var minutes = values['s'] / 60;
+                var remainderSeconds = values['s'] % 60;
+
+                values['m'] += minutes;
+                values['s'] = remainderSeconds;
+            }
+
+            // Convert Minutes to hours
+            if (values['m'] >= 60)
+            {
+                var hours = values['m'] / 60;
+                var remainderMinutes = values['m'] % 60;
+
+                values['h'] += hours;
+                values['m'] = remainderMinutes;
+            }
+
+            // Convert Hours to days
+            if (values['h'] >= 24)
+            {
+                var days = values['h'] / 24;
+                var remainderHours = values['h'] % 24;
+
+                values['d'] += days;
+                values['h'] = remainderHours;
+            }
+
+            // Convert Days to years
+            if (values['d'] >= 365)
+            {
+                var years = values['d'] / 365;
+                var remainderDays = values['d'] % 365;
+
+                values['y'] += years;
+                values['d'] = remainderDays;
+            }
+
+            return values;
         }
 
         public decimal ConvertToSeconds(string input)
