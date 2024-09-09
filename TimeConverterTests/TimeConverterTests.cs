@@ -81,5 +81,17 @@ namespace TimeConverterTests
 
             Assert.That(result, Is.EqualTo(expectedDays));
         }
+
+        [TestCase(60, 1)]
+        [TestCase(180, 3)]
+        [TestCase(600, 10)]
+        [TestCase(1136, 18.93333333333)]
+        [TestCase(2785, 46.41666666666)]
+        public void ConvertSecondsToMinutes_ReturnsTheExpectedNumberOfMinutes(decimal numberOfSeconds, decimal expectedMinutes)
+        {
+            var result = _timeConverter.ConvertSecondsToMinutes(numberOfSeconds);
+
+            Assert.That(result, Is.EqualTo(expectedMinutes).Within(0.003));
+        }
     }
 }

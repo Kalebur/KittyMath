@@ -28,85 +28,65 @@ namespace TimeConverter
 
             var valuesToConvert = input.Trim().Split(" ");
 
-            decimal combinedYears = 0;
+            decimal combinedSeconds = 0;
             foreach (var value in valuesToConvert)
             {
-                combinedYears += Convert(value);
+                combinedSeconds += ConvertToSeconds(value);
             }
 
-            years = Math.Floor(combinedYears);
-            decimal remainingMonths = ConvertYearsToMonths(combinedYears - years);
-            months = Math.Floor(remainingMonths);
-            decimal remainingDays = ConvertMonthsToDays(remainingMonths - months);
-            days = Math.Floor(remainingDays);
-            decimal remainingHours = ConvertDaysToHours(remainingDays - days);
-            hours = Math.Floor(remainingHours);
-            decimal remainingMinutes = ConvertHoursToMinutes(remainingHours - hours);
-            minutes = Math.Floor(remainingMinutes);
-            decimal remainingSeconds = ConvertMinutesToSeconds(remainingMinutes - minutes);
-            seconds = Math.Floor(remainingSeconds);
+            decimal convertedMinutes = ConvertSecondsToMinutes(combinedSeconds);
+            minutes = Math.Floor(convertedMinutes);
+            seconds = Math.Round(ConvertMinutesToSeconds(convertedMinutes - minutes));
 
+            decimal convertedHours = ConvertMinutesToHours(minutes);
+            hours = Math.Floor(convertedHours);
+            minutes = Math.Round(ConvertHoursToMinutes(convertedHours - hours));
+
+            decimal convertedDays = ConvertHoursToDays(hours);
+            days = Math.Floor(convertedDays);
+            hours = Math.Round(ConvertDaysToHours(convertedDays - days));
+
+            decimal convertedMonths = ConvertDaysToMonths(days);
+            months = Math.Floor(convertedMonths);
+            days = Math.Round(ConvertMonthsToDays(convertedMonths - months));
+
+            decimal convertedYears = ConvertMonthsToYears(months);
+            years = Math.Floor(convertedYears);
+            months = Math.Round(ConvertYearsToMonths(convertedYears - years));
 
             return (years, months, days, hours, minutes, seconds);
         }
 
-        private decimal Convert(string input)
+        public decimal ConvertToSeconds(string input)
         {
-            var value = decimal.Parse(string.Join("", 
+            var value = decimal.Parse(string.Join("",
                 input.Where(character => char.IsDigit(character) || character == '.')));
             var inputUnit = input.Last();
 
             switch (inputUnit)
             {
                 case 'y':
-                    return value;
+                    return ConvertYearsToSeconds(value);
 
                 case 'M':
-                    return ConvertMonthsToYears(value);
+                    return ConvertMonthsToSeconds(value);
 
                 case 'd':
-                    return ConvertDaysToYears(value);
+                    return ConvertDaysToSeconds(value);
 
                 case 'h':
-                    return ConvertHoursToYears(value);
+                    return ConvertHoursToSeconds(value);
 
                 case 'm':
-                    return ConvertMinutesToYears(value);
+                    return ConvertMinutesToSeconds(value);
 
                 case 's':
-                    return ConvertSecondsToYears(value);
+                    return value;
 
                 default:
                     throw new ArgumentException("Received invalid conversion unit, " + value);
             }
         }
-
-        //public (decimal years, decimal months, decimal days, decimal hours,
-        //    decimal minutes, decimal seconds) ConvertToAll(string input)
-        //{
-        //    decimal years, months, days, hours, minutes, seconds;
-        //    years = months = days = hours = minutes = seconds = 0;
-
-        //    var regex = new Regex(@"(\d+\.?\d*)([yMdhms])");
-        //    var matches = regex.Matches(input);
-
-        //    foreach (Match match in matches)
-        //    {
-        //        var value = decimal.Parse(match.Groups[1].ToString());
-        //        var startingUnit = match.Groups[2].ToString();
-
-        //        switch (startingUnit)
-        //        {
-        //            case "y":
-        //                years = value;
-        //                months = ConvertYearsToMonths(value);
-        //                days = ConvertYearsToDays(value);
-        //                break;
-        //        }
-        //    }
-
-        //    return (years, months, days, hours, minutes, seconds);
-        //}
 
         public decimal ConvertDaysToHours(decimal days)
         {
