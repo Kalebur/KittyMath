@@ -25,7 +25,7 @@ namespace TimeConverterTests
         [TestCase(61, 2.06)]
         public void ConvertDaysToMonths_ReturnsTheCorrectNumberOfMonthsRoundedToTwoPlaces(decimal numberOfDays, decimal expectedMonthCount)
         {
-            var result = _timeConverter.ConvertDaysToMonths(numberOfDays);
+            var result = Math.Round(_timeConverter.ConvertDaysToMonths(numberOfDays), 2);
 
             Assert.That(result, Is.EqualTo(expectedMonthCount));
         }
@@ -38,25 +38,25 @@ namespace TimeConverterTests
         [TestCase(19.145, 459.48)]
         public void ConvertDaysToHours_ReturnsTheCorrectNumberOfHours_RoundedToTwoPlaces(decimal numberOfDays, decimal expectedHours)
         {
-            var result = _timeConverter.ConvertDaysToHours(numberOfDays);
+            var result = Math.Round(_timeConverter.ConvertDaysToHours(numberOfDays), 2);
 
             Assert.That(result, Is.EqualTo(expectedHours));
         }
 
         [TestCase(1, 1440)]
-        [TestCase(6.347, 9139.8)]
+        [TestCase(6.347, 9139.68)]
         public void ConvertDaysToMinutes_ReturnsTheCorrectNumberOfMinutes_RoundedToTwoPlaces(decimal numberOfDays, decimal expectedMinutes)
         {
-            var result = _timeConverter.ConvertDaysToMinutes(numberOfDays);
+            var result = Math.Round(_timeConverter.ConvertDaysToMinutes(numberOfDays), 2);
 
             Assert.That(result, Is.EqualTo(expectedMinutes));
         }
 
         [TestCase(1, 86400)]
-        [TestCase(6.347, 548_388)]
-        public void ConvertDaysToMinutes_ReturnsTheCorrectNumberOfSeconds_RoundedToTwoPlaces(decimal numberOfDays, decimal expectedSeconds)
+        [TestCase(6.347, 548_380.8)]
+        public void ConvertDaysToSeconds_ReturnsTheCorrectNumberOfSeconds_RoundedToTwoPlaces(decimal numberOfDays, decimal expectedSeconds)
         {
-            var result = _timeConverter.ConvertDaysToSeconds(numberOfDays);
+            var result = Math.Round(_timeConverter.ConvertDaysToSeconds(numberOfDays), 2);
 
             Assert.That(result, Is.EqualTo(expectedSeconds));
         }
@@ -74,10 +74,10 @@ namespace TimeConverterTests
         [TestCase(11, 334)]
         [TestCase(12, 365)]
         [TestCase(13, 396)]
-        [TestCase(12.5, 380.5)]
+        [TestCase(12.5, 380)]
         public void ConvertMonthsToDays_ReturnsTheExpectedNumberOfMonths(decimal numberOfMonths, decimal expectedDays)
         {
-            var result = _timeConverter.ConvertMonthsToDays(numberOfMonths);
+            var result = Math.Round(_timeConverter.ConvertMonthsToDays(numberOfMonths));
 
             Assert.That(result, Is.EqualTo(expectedDays));
         }

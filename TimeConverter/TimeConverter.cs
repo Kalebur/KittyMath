@@ -1,4 +1,6 @@
-﻿namespace TimeConverter
+﻿using System.Text.RegularExpressions;
+
+namespace TimeConverter
 {
     public class TimeConverter : ITimeConverter
     {
@@ -18,15 +20,103 @@
                 {12, 31},
             };
 
+        public (decimal years, decimal months, decimal days, decimal hours,
+            decimal minutes, decimal seconds) ConvertFromString(string input)
+        {
+            decimal years, months, days, hours, minutes, seconds;
+            years = months = days = hours = minutes = seconds = 0;
+
+            var valuesToConvert = input.Trim().Split(" ");
+
+            decimal combinedYears = 0;
+            foreach (var value in valuesToConvert)
+            {
+                combinedYears += Convert(value);
+            }
+
+            years = Math.Floor(combinedYears);
+            decimal remainingMonths = ConvertYearsToMonths(combinedYears - years);
+            months = Math.Floor(remainingMonths);
+            decimal remainingDays = ConvertMonthsToDays(remainingMonths - months);
+            days = Math.Floor(remainingDays);
+            decimal remainingHours = ConvertDaysToHours(remainingDays - days);
+            hours = Math.Floor(remainingHours);
+            decimal remainingMinutes = ConvertHoursToMinutes(remainingHours - hours);
+            minutes = Math.Floor(remainingMinutes);
+            decimal remainingSeconds = ConvertMinutesToSeconds(remainingMinutes - minutes);
+            seconds = Math.Floor(remainingSeconds);
+
+
+            return (years, months, days, hours, minutes, seconds);
+        }
+
+        private decimal Convert(string input)
+        {
+            var value = decimal.Parse(string.Join("", 
+                input.Where(character => char.IsDigit(character) || character == '.')));
+            var inputUnit = input.Last();
+
+            switch (inputUnit)
+            {
+                case 'y':
+                    return value;
+
+                case 'M':
+                    return ConvertMonthsToYears(value);
+
+                case 'd':
+                    return ConvertDaysToYears(value);
+
+                case 'h':
+                    return ConvertHoursToYears(value);
+
+                case 'm':
+                    return ConvertMinutesToYears(value);
+
+                case 's':
+                    return ConvertSecondsToYears(value);
+
+                default:
+                    throw new ArgumentException("Received invalid conversion unit, " + value);
+            }
+        }
+
+        //public (decimal years, decimal months, decimal days, decimal hours,
+        //    decimal minutes, decimal seconds) ConvertToAll(string input)
+        //{
+        //    decimal years, months, days, hours, minutes, seconds;
+        //    years = months = days = hours = minutes = seconds = 0;
+
+        //    var regex = new Regex(@"(\d+\.?\d*)([yMdhms])");
+        //    var matches = regex.Matches(input);
+
+        //    foreach (Match match in matches)
+        //    {
+        //        var value = decimal.Parse(match.Groups[1].ToString());
+        //        var startingUnit = match.Groups[2].ToString();
+
+        //        switch (startingUnit)
+        //        {
+        //            case "y":
+        //                years = value;
+        //                months = ConvertYearsToMonths(value);
+        //                days = ConvertYearsToDays(value);
+        //                break;
+        //        }
+        //    }
+
+        //    return (years, months, days, hours, minutes, seconds);
+        //}
+
         public decimal ConvertDaysToHours(decimal days)
         {
-            return Math.Round(days * 24, 2);
+            return days * 24;
         }
 
         public decimal ConvertDaysToMinutes(decimal days)
         {
             var hours = ConvertDaysToHours(days);
-            return Math.Round(hours * 60, 2);
+            return hours * 60;
         }
 
         public decimal ConvertDaysToMonths(decimal days)
@@ -50,7 +140,7 @@
                 }
             }
 
-            return Math.Round(months + (days / daysPerMonth[endingMonth]), 2);
+            return months + (days / daysPerMonth[endingMonth]);
         }
 
         public decimal ConvertDaysToSeconds(decimal days)
@@ -61,35 +151,35 @@
 
         public decimal ConvertDaysToYears(decimal days)
         {
-            return Math.Round(days / 365, 2);
+            return days / 365;
         }
 
         public decimal ConvertHoursToDays(decimal hours)
         {
-            return Math.Round(hours / 24, 2);
+            return hours / 24;
         }
 
         public decimal ConvertHoursToMinutes(decimal hours)
         {
-            return Math.Round(hours * 60, 2);
+            return  hours * 60;
         }
 
         public decimal ConvertHoursToMonths(decimal hours)
         {
             var days = ConvertHoursToDays(hours);
-            return ConvertHoursToMonths(days);
+            return ConvertDaysToMonths(days);
         }
 
         public decimal ConvertHoursToSeconds(decimal hours)
         {
             var minutes = ConvertHoursToMinutes(hours);
-            return Math.Round(minutes * 60, 2);
+            return minutes * 60;
         }
 
         public decimal ConvertHoursToYears(decimal hours)
         {
             var days = ConvertHoursToDays(hours);
-            return ConvertHoursToYears(days);
+            return ConvertDaysToYears(days);
         }
 
         public decimal ConvertMinutesToDays(decimal minutes)
@@ -100,7 +190,7 @@
 
         public decimal ConvertMinutesToHours(decimal minutes)
         {
-            return Math.Round(minutes / 60, 2);
+            return minutes / 60;
         }
 
         public decimal ConvertMinutesToMonths(decimal minutes)
@@ -111,7 +201,7 @@
 
         public decimal ConvertMinutesToSeconds(decimal minutes)
         {
-            return Math.Round(minutes * 60, 2);
+            return minutes * 60;
         }
 
         public decimal ConvertMinutesToYears(decimal minutes)
@@ -183,7 +273,7 @@
 
         public decimal ConvertSecondsToMinutes(decimal seconds)
         {
-            return Math.Round(seconds / 60, 2);
+            return seconds / 60;
         }
 
         public decimal ConvertSecondsToMonths(decimal seconds)
@@ -218,7 +308,7 @@
 
         public decimal ConvertYearsToMonths(decimal years)
         {
-            return Math.Round(years * 12, 2);
+            return years * 12;
         }
 
         public decimal ConvertYearsToSeconds(decimal years)
