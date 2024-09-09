@@ -20,50 +20,7 @@ namespace TimeConverter
                 {12, 31},
             };
 
-        public (decimal years, decimal months, decimal days, decimal hours,
-            decimal minutes, decimal seconds) ConvertFromString(string input)
-        {
-            decimal years, months, days, hours, minutes, seconds;
-            years = months = days = hours = minutes = seconds = 0;
-
-            var valuesToConvert = input.Trim().Split(" ");
-
-            decimal combinedSeconds = 0;
-            foreach (var value in valuesToConvert)
-            {
-                combinedSeconds += ConvertToSeconds(value);
-            }
-
-            decimal convertedMinutes = ConvertSecondsToMinutes(combinedSeconds);
-            minutes = Math.Floor(convertedMinutes);
-            seconds = Math.Round(ConvertMinutesToSeconds(convertedMinutes - minutes));
-
-            decimal convertedHours = ConvertMinutesToHours(minutes);
-            hours = Math.Floor(convertedHours);
-            minutes = Math.Round(ConvertHoursToMinutes(convertedHours - hours));
-
-            decimal convertedDays = ConvertHoursToDays(hours);
-            days = Math.Floor(convertedDays);
-            hours = Math.Round(ConvertDaysToHours(convertedDays - days));
-
-            decimal convertedMonths = ConvertDaysToMonths(days);
-            months = Math.Floor(convertedMonths);
-            days = Math.Round(ConvertMonthsToDays(convertedMonths - months));
-
-            decimal convertedYears = ConvertMonthsToYears(months);
-            years = Math.Floor(convertedYears);
-            months = Math.Round(ConvertYearsToMonths(convertedYears - years));
-
-            days += (int)(years / 4);
-            var convertedValuesAsInputString = $"{years}y {months}M {days}d {hours}h {minutes}m {seconds}s";
-            Console.WriteLine(convertedValuesAsInputString);
-
-            return (years, months, days, hours, minutes, seconds);
-        }
-
-        public Dictionary<char, int> SimpleConvertFromString(string input)
-        {
-            var values = new Dictionary<char, int>()
+        private readonly Dictionary<char, decimal> _unitsByUnitCode = new()
             {
                 {'y', 0 },
                 {'d', 0 },
@@ -71,6 +28,47 @@ namespace TimeConverter
                 {'m', 0 },
                 {'s', 0 },
             };
+
+        public Dictionary<char, decimal> ConvertFromString(string input)
+        {
+            var valuesFromString = input.Split(" ");
+
+            decimal combinedSeconds = 0;
+            foreach (var value in valuesFromString)
+            {
+                combinedSeconds += ConvertToSeconds(value);
+            }
+
+            decimal convertedMinutes = ConvertSecondsToMinutes(combinedSeconds);
+            AssignConvertedValues('m', 's', convertedMinutes, ConvertMinutesToSeconds);
+
+            decimal convertedHours = ConvertMinutesToHours(_unitsByUnitCode['m']);
+            AssignConvertedValues('h', 'm', convertedHours, ConvertHoursToMinutes);
+
+            decimal convertedDays = ConvertHoursToDays(_unitsByUnitCode['h']);
+            AssignConvertedValues('d', 'h', convertedDays, ConvertDaysToHours);
+
+            decimal convertedMonths = ConvertDaysToMonths(_unitsByUnitCode['d']);
+            AssignConvertedValues('M', 'd', convertedMonths, ConvertMonthsToDays);
+
+            decimal convertedYears = ConvertMonthsToYears(_unitsByUnitCode['M']);
+            AssignConvertedValues('y', 'M', convertedYears, ConvertYearsToMonths);
+
+            var convertedValuesAsInputString = $"{_unitsByUnitCode['y']}y {_unitsByUnitCode['M']}M {_unitsByUnitCode['d']}d {_unitsByUnitCode['h']}h {_unitsByUnitCode['m']}m {_unitsByUnitCode['s']}s";
+            Console.WriteLine(convertedValuesAsInputString);
+
+            return _unitsByUnitCode;
+        }
+
+        private void AssignConvertedValues(char majorUnit, char minorUnit, decimal majorValue, Func<decimal, decimal> convertToMinor)
+        {
+            _unitsByUnitCode[majorUnit] = Math.Floor(majorValue);
+            _unitsByUnitCode[minorUnit] = Math.Round(convertToMinor(majorValue - _unitsByUnitCode[majorUnit]));
+        }
+
+        public Dictionary<char, decimal> SimpleConvertFromString(string input)
+        {
+            _unitsByUnitCode.Remove('M');
             var valuesToConvert = input.Split(" ");
             Regex regex = new Regex(@"(\d+)([ydhms])");
 
@@ -78,15 +76,15 @@ namespace TimeConverter
             {
                 var unitType = value.Last();
                 var unitCount = int.Parse(value[0..(value.Length - 1)]);
-                values[unitType] = unitCount;
+                _unitsByUnitCode[unitType] = unitCount;
             }
 
-            var convertedValues = PerformSimpleConversion(values);
+            var convertedValues = PerformSimpleConversion(_unitsByUnitCode);
 
             return convertedValues;
         }
 
-        private Dictionary<char, int> PerformSimpleConversion(Dictionary<char, int> values)
+        private Dictionary<char, decimal> PerformSimpleConversion(Dictionary<char, decimal> values)
         {
             // Convert seconds to minutes
             if (values['s'] >= 60) {

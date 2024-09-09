@@ -12,35 +12,26 @@
         xxxx seconds
 */
 
-var input = "1942y 113d 07h 03m 42s";
-var input2 = "340000000d";
+var input = "1942y 32d 07h 03m 42s";
+var input2 = "314s";
 var timeConverter = new TimeConverter.TimeConverter();
-//var convertedValues = timeConverter.ConvertFromString(input2);
-//Console.WriteLine($"Given input: {input2}");
-//Console.WriteLine();
-//Console.WriteLine("Output:");
-//Console.WriteLine($"\t{convertedValues.years} Year(s)");
-//Console.WriteLine($"\t{convertedValues.months} Month(s)");
-//Console.WriteLine($"\t{convertedValues.days} Day(s)");
-//Console.WriteLine($"\t{convertedValues.hours} Hour(s)");
-//Console.WriteLine($"\t{convertedValues.minutes} Minute(s)");
-//Console.WriteLine($"\t{convertedValues.seconds} Second(s)");
 
-var result = timeConverter.SimpleConvertFromString(input2);
+//var result = timeConverter.SimpleConvertFromString(input2);
+var result = timeConverter.ConvertFromString(input2);
 DisplayConversionResult(result, input2);
 
-void DisplayConversionResult(Dictionary<char, int> result, string input2)
+void DisplayConversionResult(Dictionary<char, decimal> result, string input)
 {
-    Console.WriteLine($"Given input: {input2}");
+    Console.WriteLine($"Given input: {input}");
     Console.WriteLine();
     Console.WriteLine("Output:");
-    Console.WriteLine($"\t{result['y']} Year(s)");
+    Console.WriteLine($"\t{(int)result['y']} Year(s)");
     if (result.ContainsKey('M'))
     {
-        Console.WriteLine($"\t{result['M']} Month(s)");
+        Console.WriteLine($"\t{(int)result['M']} Month(s)");
     }
-    Console.WriteLine($"\t{result['d']} Day(s)");
-    Console.WriteLine($"\t{result['h']} Hour(s)");
-    Console.WriteLine($"\t{result['m']} Minute(s)");
-    Console.WriteLine($"\t{result['s']} Second(s)");
+    Console.WriteLine($"\t{(int)result['d']} Day(s)");
+    Console.WriteLine($"\t{(int)result['h']} Hour(s)");
+    Console.WriteLine($"\t{(int)result['m']} Minute(s)");
+    Console.WriteLine($"\t{(int)result['s']} Second(s)");
 }
