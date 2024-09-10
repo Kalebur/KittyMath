@@ -2,7 +2,7 @@
 
 namespace TimeConverter
 {
-    public class TimeConverter : ITimeConverter
+    public class UnitConverter : ITimeConverter
     {
         private readonly Dictionary<int, int> daysPerMonth = new Dictionary<int, int>()
             {
@@ -20,41 +20,55 @@ namespace TimeConverter
                 {12, 31},
             };
 
-        public (decimal years, decimal months, decimal days, decimal hours,
-            decimal minutes, decimal seconds) ConvertFromString(string input)
+        public (decimal major, decimal minor) ConvertValues(decimal majorValue, Func<decimal, decimal> convertToMinor)
         {
-            decimal years, months, days, hours, minutes, seconds;
-            years = months = days = hours = minutes = seconds = 0;
+            decimal major = Math.Floor(majorValue);
+            decimal minor = Math.Round(convertToMinor(majorValue - major));
+            return (major, minor);
+        }
 
-            var valuesToConvert = input.Trim().Split(" ");
+        public Dictionary<char, decimal> PerformSimpleConversion(Dictionary<char, decimal> values)
+        {
+            // Convert seconds to minutes
+            if (values['s'] >= 60) {
+                var minutes = values['s'] / 60;
+                var remainderSeconds = values['s'] % 60;
 
-            decimal combinedSeconds = 0;
-            foreach (var value in valuesToConvert)
-            {
-                combinedSeconds += ConvertToSeconds(value);
+                values['m'] += minutes;
+                values['s'] = remainderSeconds;
             }
 
-            decimal convertedMinutes = ConvertSecondsToMinutes(combinedSeconds);
-            minutes = Math.Floor(convertedMinutes);
-            seconds = Math.Round(ConvertMinutesToSeconds(convertedMinutes - minutes));
+            // Convert Minutes to hours
+            if (values['m'] >= 60)
+            {
+                var hours = values['m'] / 60;
+                var remainderMinutes = values['m'] % 60;
 
-            decimal convertedHours = ConvertMinutesToHours(minutes);
-            hours = Math.Floor(convertedHours);
-            minutes = Math.Round(ConvertHoursToMinutes(convertedHours - hours));
+                values['h'] += hours;
+                values['m'] = remainderMinutes;
+            }
 
-            decimal convertedDays = ConvertHoursToDays(hours);
-            days = Math.Floor(convertedDays);
-            hours = Math.Round(ConvertDaysToHours(convertedDays - days));
+            // Convert Hours to days
+            if (values['h'] >= 24)
+            {
+                var days = values['h'] / 24;
+                var remainderHours = values['h'] % 24;
 
-            decimal convertedMonths = ConvertDaysToMonths(days);
-            months = Math.Floor(convertedMonths);
-            days = Math.Round(ConvertMonthsToDays(convertedMonths - months));
+                values['d'] += days;
+                values['h'] = remainderHours;
+            }
 
-            decimal convertedYears = ConvertMonthsToYears(months);
-            years = Math.Floor(convertedYears);
-            months = Math.Round(ConvertYearsToMonths(convertedYears - years));
+            // Convert Days to years
+            if (values['d'] >= 365)
+            {
+                var years = values['d'] / 365;
+                var remainderDays = values['d'] % 365;
 
-            return (years, months, days, hours, minutes, seconds);
+                values['y'] += years;
+                values['d'] = remainderDays;
+            }
+
+            return values;
         }
 
         public decimal ConvertToSeconds(string input)
