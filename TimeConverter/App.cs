@@ -15,13 +15,15 @@
             do
             {
                 Console.WriteLine("Enter a string in the format Xy XM Xd Xh Xm Xs");
-                Console.WriteLine("Where X is a number of years, Months, days, hours, minutes and seconds");
+                Console.WriteLine("Where X is a number of (y)ears, (M)onths, (d)ays,\n" +
+                    "\t(h)ours, (m)inutes and (s)econds");
+                Console.Write("Enter your string: ");
                 string userInput = Console.ReadLine();
                 var result = _unitProcessor.ConvertFromString(userInput);
                 result = AdjustForLeapYears(result);
                 DisplayConversionResult(result, userInput);
 
-                Console.Write("Do you want to play again? y/n");
+                Console.Write("Do you want to play again? y/n: ");
                 userChoice = Console.ReadLine().Trim().ToLower();
             } while (userChoice != "n");
 
