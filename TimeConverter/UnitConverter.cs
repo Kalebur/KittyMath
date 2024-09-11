@@ -225,7 +225,7 @@ namespace TimeConverter
             var fractionalMonth = months - Math.Floor(months);
             days += fractionalMonth * daysPerMonth[nextMonth];
 
-            return Math.Round(days, 2);
+            return days;
         }
 
         public decimal ConvertMonthsToHours(decimal months)
